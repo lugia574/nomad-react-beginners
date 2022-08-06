@@ -46,17 +46,21 @@ function Home() {
   }
 
   function handleSwipe(direction) {
-    console.log(currentIndex, "이게 뭐냐 현재 상태", direction);
-    setCurrentIndex((currentIndex) => currentIndex + direction);
-    console.log(currentIndex, "set 지난 다음 상태");
-
-    if (currentIndex === 0) {
-      console.log(currentIndex, "prev 넘기기");
-      replaceSlide(800);
-    } else if (currentIndex === (slides.length - 2) * -800) {
-      console.log(currentIndex, "next 넘기기");
-      replaceSlide((slides.length - 1) * -800);
+    let index = currentIndex + direction;
+    console.log("현재 index", index);
+    setCurrentIndex(index);
+    console.log("setCurrentIndex 끝남", currentIndex);
+    if (index < 2) {
+      console.log("index < 2", currentIndex);
+      index += movies.length;
+      replaceSlide(index);
+    } else if (index >= movies.length + 2) {
+      console.log(movies.length + 2, "movies.length + 2", currentIndex);
+      index -= -movies.length;
+      replaceSlide(index);
     }
+
+    console.log("다 끝난 마당에 index", currentIndex);
   }
 
   return (
@@ -70,8 +74,7 @@ function Home() {
             <div
               className="slide slide_wrap"
               style={{
-                transform: `translateX(${currentIndex}px)`,
-                left: 0,
+                transform: `translateX(${currentIndex * 800}px)`,
               }}
             >
               {slides.map((movie, index) => (
@@ -86,13 +89,13 @@ function Home() {
             </div>
             <div
               className="slide_prev_button slide_button"
-              onClick={() => handleSwipe(800)}
+              onClick={() => handleSwipe(1)}
             >
               ◀
             </div>
             <div
               className="slide_next_button slide_button"
-              onClick={() => handleSwipe(-800)}
+              onClick={() => handleSwipe(-1)}
             >
               ▶
             </div>
