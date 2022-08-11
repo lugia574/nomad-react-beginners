@@ -1,8 +1,25 @@
-import { useEffect, useState } from "react";
+import React, { useLayoutEffect, useRef, useEffect, useState } from "react";
 import Movie from "../components/Movie";
 import MovieSlide from "../components/MovieSlide";
 import Footer from "../views/partials/Footer";
 import Header from "../views/partials/Header";
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 function Home() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +40,10 @@ function Home() {
   useEffect(() => {
     getMovies();
   }, []);
+
+  // useInterval(() => {
+  //   setCurrentIndex((currentIndex) => currentIndex + -1);
+  // }, 2000);
 
   let slides = setSlides();
 
@@ -46,21 +67,20 @@ function Home() {
   }
 
   function handleSwipe(direction) {
+    let firstIndex = 1;
     let index = currentIndex + direction;
-    console.log("현재 index", index);
+
     setCurrentIndex(index);
-    console.log("setCurrentIndex 끝남", currentIndex);
-    if (index < 2) {
-      console.log("index < 2", currentIndex);
-      index += movies.length;
+
+    if (index === firstIndex) {
+      index += -(movies.length + 2);
       replaceSlide(index);
-    } else if (index >= movies.length + 2) {
-      console.log(movies.length + 2, "movies.length + 2", currentIndex);
-      index -= -movies.length;
+    } else if (index <= -(movies.length + 2)) {
+      index = 0;
       replaceSlide(index);
     }
 
-    console.log("다 끝난 마당에 index", currentIndex);
+    // setTransition(transitionStyle);
   }
 
   return (
