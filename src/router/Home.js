@@ -103,6 +103,7 @@ function Home() {
                   id={movie.id}
                   coverImg={movie.large_cover_image}
                   title={movie.title}
+                  description={movie.description_full}
                   genres={movie.genres}
                 />
               ))}

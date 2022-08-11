@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
 function Header() {
   return (
     <header className="header">
-      <a className="header_logo">NETFELX</a>
+      <div className="header_logo">
+        <Link to={`/`}>NETFELX</Link>
+      </div>
 
       <nav>
         <ul>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MovieDetail from "../components/MovieDetail";
+import Header from "../views/partials/Header";
+import Footer from "../views/partials/Footer";
 
 function Detail() {
   const { id } = useParams();
@@ -23,7 +25,8 @@ function Detail() {
 
   console.log(info);
   return (
-    <div>
+    <div className="container">
+      <Header />
       {movieLoading ? (
         <h1>loading....</h1>
       ) : (
@@ -41,6 +44,7 @@ function Detail() {
           }
         </div>
       )}
+      <Footer />
     </div>
   );
 }
