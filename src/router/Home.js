@@ -84,7 +84,7 @@ function Home() {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header />
       {loading ? (
         <h1>loading....</h1>
@@ -94,14 +94,14 @@ function Home() {
             <div
               className="slide slide_wrap"
               style={{
-                transform: `translateX(${currentIndex * 800}px)`,
+                transform: `translateX(${currentIndex * 95}rem)`,
               }}
             >
               {slides.map((movie, index) => (
                 <Movie
                   key={index}
                   id={movie.id}
-                  coverImg={movie.medium_cover_image}
+                  coverImg={movie.large_cover_image}
                   title={movie.title}
                   genres={movie.genres}
                 />
