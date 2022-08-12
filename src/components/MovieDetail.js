@@ -1,30 +1,44 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 function MovieDetail({ id, coverImg, title, genres, rating, description }) {
+  const star = [];
+  const cnt = Math.floor(rating / 2);
+
+  for (let i = 0; i < cnt; i++) {
+    star.push("★");
+  }
+
+  for (let i = cnt; i < 5; i++) {
+    star.push("☆");
+  }
+
   return (
     <div className="movie_info">
       <div className="movie_info_container movie_img">
         <img src={coverImg} alt={title} />
       </div>
       <div className="movie_info_container">
-        <div className="movie_title">
-          <Link to={`/movie/${id}`}>{title}</Link>
-        </div>
-        <div className="movie_subInfo">
-          <div className="movie_info_tag">
-            {" "}
-            <ul className="gunre_list">
-              {genres.map((g) => (
+        <div className="movie_title">{title}</div>
+        <div className="movie_rating">
+          {
+            <ul className="star_rating">
+              {star.map((g) => (
                 <li key={g}>{g}</li>
               ))}
             </ul>
-          </div>
-          <div className="movie_rating">
-            <p>{rating}</p>
-          </div>
+          }
+          <p>{rating}</p>
         </div>
         <div className="movie_info_summary">{description}</div>
+
+        <div className="movie_info_tag">
+          {" "}
+          <ul className="gunre_list">
+            {genres.map((g) => (
+              <li key={g}>{g}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

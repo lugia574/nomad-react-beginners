@@ -1,7 +1,17 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-function Movie({ id, coverImg, title, genres, description }) {
+function Movie({ id, coverImg, title, genres, description, rating }) {
+  const star = [];
+  const cnt = Math.floor(rating / 2);
+
+  for (let i = 0; i < cnt; i++) {
+    star.push("★");
+  }
+
+  for (let i = cnt; i < 5; i++) {
+    star.push("☆");
+  }
   return (
     <div className="slide_item">
       <div className="slide_container movie">
@@ -10,7 +20,11 @@ function Movie({ id, coverImg, title, genres, description }) {
         </p>
         <div className="slide_container movie_detail">
           <div className="movie_detail_rating">
-            <p>★★★★★</p>
+            <ul className="star_rating">
+              {star.map((g) => (
+                <li key={g}>{g}</li>
+              ))}
+            </ul>
           </div>
           <div className="movie_detail_summary">
             {description.slice(0, 350)}...
@@ -39,6 +53,7 @@ Movie.propTypes = {
   coverImg: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rating: PropTypes.number.isRequired,
 };
 
 export default Movie;

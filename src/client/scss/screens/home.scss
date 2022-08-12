@@ -29,14 +29,14 @@
   /* layout */
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-around;
   margin: 2.5rem 50rem 2.5rem 0;
   padding: 2rem;
   background-color: rgba(0, 0, 0, 0.1);
 
   /* position - 버튼 클릭시 left offset값을 적용시키기 위해 */
   position: relative;
-  left: -108rem;
+  left: -150%;
 
   /* size */
   width: 60rem;
@@ -76,7 +76,7 @@
 
       .movie_detail_rating {
         width: 100%;
-        color: gray;
+
         justify-content: end;
         margin: 10px 0 50px;
         text-align: end;

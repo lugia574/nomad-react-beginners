@@ -1,6 +1,5 @@
 import React, { useLayoutEffect, useRef, useEffect, useState } from "react";
 import Movie from "../components/Movie";
-import MovieSlide from "../components/MovieSlide";
 import Footer from "../views/partials/Footer";
 import Header from "../views/partials/Header";
 
@@ -41,9 +40,9 @@ function Home() {
     getMovies();
   }, []);
 
-  useInterval(() => {
-    setCurrentIndex((currentIndex) => currentIndex + -1);
-  }, 20000);
+  // useInterval(() => {
+  //   setCurrentIndex((currentIndex) => currentIndex + -1);
+  // }, 20000);
 
   let slides = setSlides();
 
@@ -73,14 +72,12 @@ function Home() {
     setCurrentIndex(index);
 
     if (index === firstIndex) {
-      index += -(movies.length + 2);
+      index += -movies.length;
       replaceSlide(index);
-    } else if (index <= -(movies.length + 2)) {
+    } else if (index <= -movies.length) {
       index = 0;
       replaceSlide(index);
     }
-
-    // setTransition(transitionStyle);
   }
 
   return (
@@ -105,6 +102,7 @@ function Home() {
                   title={movie.title}
                   description={movie.description_full}
                   genres={movie.genres}
+                  rating={movie.rating}
                 />
               ))}
             </div>
