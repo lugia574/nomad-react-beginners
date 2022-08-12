@@ -40,9 +40,9 @@ function Home() {
     getMovies();
   }, []);
 
-  // useInterval(() => {
-  //   setCurrentIndex((currentIndex) => currentIndex + -1);
-  // }, 20000);
+  useInterval(() => {
+    handleSwipe(-1);
+  }, 2000);
 
   let slides = setSlides();
 
