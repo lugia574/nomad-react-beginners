@@ -42,7 +42,7 @@ function Home() {
 
   useInterval(() => {
     handleSwipe(-1);
-  }, 2000);
+  }, 10000);
 
   let slides = setSlides();
 
