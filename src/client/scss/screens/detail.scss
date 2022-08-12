@@ -1,8 +1,51 @@
-.movie_detail {
+.main {
   display: flex;
-
-  .movie_detail_container {
+  justify-content: center;
+  align-items: center;
+  .movie_info {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 80rem;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .movie_info_container {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem;
+    }
+
+    .movie_info_container:nth-child(2) {
+      height: 25rem;
+      justify-content: space-around;
+    }
+    .movie_img {
+      width: 20rem;
+    }
+
+    .movie_title {
+      font-size: 3rem;
+      font-weight: 400;
+    }
+
+    .movie_subInfo {
+      display: flex;
+      align-items: center;
+
+      .gunre_list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        li {
+          padding: 2.5px;
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, 0.2);
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }

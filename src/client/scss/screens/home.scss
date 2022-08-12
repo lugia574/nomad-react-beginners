@@ -30,14 +30,16 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  margin: 2.5rem;
+  margin: 2.5rem 50rem 2.5rem 0;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.1);
 
   /* position - 버튼 클릭시 left offset값을 적용시키기 위해 */
   position: relative;
-  left: 0px;
+  left: -108rem;
 
   /* size */
-  width: 90rem;
+  width: 60rem;
   height: auto;
   img {
     width: 100%;
@@ -91,7 +93,7 @@
           align-items: center;
           margin-top: 10px;
           li {
-            padding: 2.5px;
+            padding: 5px;
             border-radius: 10px;
             background-color: rgba(255, 255, 255, 0.2);
             margin-right: 10px;

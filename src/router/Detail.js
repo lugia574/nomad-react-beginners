@@ -30,7 +30,7 @@ function Detail() {
       {movieLoading ? (
         <h1>loading....</h1>
       ) : (
-        <div>
+        <div className="main">
           {
             <MovieDetail
               key={info.id}

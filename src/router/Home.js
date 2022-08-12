@@ -41,9 +41,9 @@ function Home() {
     getMovies();
   }, []);
 
-  // useInterval(() => {
-  //   setCurrentIndex((currentIndex) => currentIndex + -1);
-  // }, 2000);
+  useInterval(() => {
+    setCurrentIndex((currentIndex) => currentIndex + -1);
+  }, 20000);
 
   let slides = setSlides();
 
@@ -94,7 +94,7 @@ function Home() {
             <div
               className="slide slide_wrap"
               style={{
-                transform: `translateX(${currentIndex * 95}rem)`,
+                transform: `translateX(${currentIndex * 114}rem)`,
               }}
             >
               {slides.map((movie, index) => (
