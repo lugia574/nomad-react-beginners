@@ -231,3 +231,63 @@ validator 함수 리턴값을 willUpdate 에 담아서
 willUpdate 가 참이면 setValue(value) 한다
 
 ## 1.3 useTabs
+
+useTabs을 해보자
+
+```ts
+import { StrictMode, useState } from "react";
+import { createRoot } from "react-dom/client";
+import "./styles.css";
+
+// 데이터
+const content = [
+  {
+    tab: "Section 1",
+    content: "I'm the content of the Section 1",
+  },
+  {
+    tab: "Section 2",
+    content: "I'm the content of the Section 2 뭐해",
+  },
+];
+```
+
+```js
+const useTabs = (initialTab, allTabs) => {
+  if (!allTabs || !Array.isArray(allTabs)) {
+    return;
+  }
+  const [currentIndex, setCurrnetIndex] = useState(initialTab);
+
+  return {
+    currentItem: allTabs[currentIndex],
+    chageItem: setCurrnetIndex,
+  };
+};
+```
+
+```js
+const App = () => {
+  const { currentItem, chageItem } = useTabs(0, content);
+  return (
+    <div className="App">
+      <h1>Hello</h1>
+      {content.map((section, index) => (
+        <button onClick={() => chageItem(index)} key={index}>
+          {section.tab}
+        </button>
+      ))}
+      <div>{currentItem.content}</div>
+    </div>
+  );
+};
+
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+```
