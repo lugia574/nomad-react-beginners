@@ -18,6 +18,8 @@
 
 여기다가 하도록 하겠음
 
+[실습 사이트](https://codesandbox.io/s/unruffled-shadow-pjgjv5?file=/src/index.js)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
