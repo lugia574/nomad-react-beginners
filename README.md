@@ -1,3 +1,15 @@
+# REACT
+
+리액트를 이용한 홈페이지 만들기
+
+# REACT HOOKS
+
+원래는 따로 리포지터리를 만들려고 했는데
+
+분량이 얼마 되지 않고, 따로 만들거나 하는 것이 아니니
+
+여기다가 하도록 하겠음
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
