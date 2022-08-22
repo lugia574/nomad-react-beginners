@@ -2,6 +2,14 @@
 
 리액트를 이용한 홈페이지 만들기
 
+가장 기초적인 지식을 알아두도록 하자
+
+[단계별 가이드](https://ko.reactjs.org/docs/hello-world.html)
+
+[실습으로 배우기](https://ko.reactjs.org/tutorial/tutorial.html)
+
+이들은 상호보완적이라 둘 다 보면서 공부하길 권장함
+
 # REACT HOOKS
 
 원래는 따로 리포지터리를 만들려고 했는데
