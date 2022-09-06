@@ -10,6 +10,10 @@
 
 이들은 상호보완적이라 둘 다 보면서 공부하길 권장함
 
+# 코딩애플
+
+https://www.youtube.com/watch?v=LclObYwGj90&list=PLfLgtT94nNq1e6tr4sm2eH6ZZC2jcqGOy
+
 # REACT HOOKS
 
 원래는 따로 리포지터리를 만들려고 했는데
