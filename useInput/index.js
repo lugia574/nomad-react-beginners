@@ -1,15 +1,24 @@
-import { StrictMode, useState } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 import "./useInput";
 
+const useTitle = (initialTitle) => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
+  };
+  useEffect(updateTitle, [title]);
+  return setTitle;
+};
+
 const App = () => {
-  const maxLen = (value) => value.length <= 10;
-  const name = useInput("Mr.", maxLen);
+  const titleUpdater = useTitle("Loading... ");
+  setTimeout(() => titleUpdater("Home", 5000));
   return (
     <div className="App">
-      <h1>Hello</h1>
-      <input placeholder="Name" {...name} />
+      <div>HI</div>
     </div>
   );
 };
