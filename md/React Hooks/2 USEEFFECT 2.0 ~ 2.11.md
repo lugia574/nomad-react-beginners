@@ -113,3 +113,7 @@ const App = () => {
 title 변경을 확인한 `useEffect` 가 updateTitle 함수를 실행할꺼임
 
 ## 2.2 useClick
+
+이제 `useClick` 을 함 해보자
+
+useClick 을 이용하려면 reference 에 대해 알고 있어야함
