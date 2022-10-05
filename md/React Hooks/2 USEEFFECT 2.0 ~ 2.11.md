@@ -117,3 +117,91 @@ title 변경을 확인한 `useEffect` 가 updateTitle 함수를 실행할꺼임
 이제 `useClick` 을 함 해보자
 
 useClick 을 이용하려면 reference 에 대해 알고 있어야함
+
+reference 은 우리가 commponenet 의 어떤 부분을 선택할 때 쓰는 방법임
+
+getElementByID 같은거 말야
+
+내가
+
+```html
+<input placeholder="haha" />
+```
+
+input을 5초 뒤에 focus 하고싶다면
+
+```js
+const App = () =>{
+  const 바로이것 = useRef();
+  setTimeout(()=> 바로이것.current.focus(), 5000)
+  return(
+    <div className="App">
+      <div>Hi<div>
+      <input ref={바로이것} placeholder="haha">
+    </div>
+  )
+}
+```
+
+이렇게 하면 된다.
+
+이게 바로 reference
+
+이제 useClick 을 해보자.
+
+```js
+const useClick = (onClick) => {
+  if (typeof onClick !== "function") {
+    return;
+  }
+  const element = useRef();
+  useEffect(() => {
+    if (element.current) {
+      element.current.addEventListener("Click", onClick);
+    }
+    return () => {
+      if (element.current) {
+        element.current.removeEventListener("Click", onClick);
+      }
+    };
+  }, []);
+  return element;
+};
+
+const App = () => {
+  const sayHello = () => console.log("say hello");
+  const title = useClick(sayHello);
+  return (
+    <div className="App">
+      <h1 ref={title}>HI</h1>
+    </div>
+  );
+};
+```
+
+근데 React 16.8v 부터는 Hook 을 조건문, 반복문, 중첩함수 내에서 호출할 수 없습니다.
+
+강의내용과 같은 결과를 얻으려면 아래의 코드처럼 useEffect 내에서 이벤트 바인딩을 막고,
+최종적으로 undefinded 를 리턴 해야합니다.
+
+단순히 이벤트의 바인딩만 막으려면 return element 를 그대로 사용해도 괜찮습니다.
+
+```js
+const useClick = (onClick) => {
+  const element = useRef();
+  useEffect(() => {
+    if (typeof onClick !== "function") {
+      return;
+    }
+    if (element.current) {
+      element.current.addEventListener("click", onClick);
+    }
+    return () => {
+      if (element.current) {
+        element.current.removeEventListener("click", onClick);
+      }
+    };
+  }, []);
+  return typeof onClick !== "function" ? undefined : element;
+};
+```

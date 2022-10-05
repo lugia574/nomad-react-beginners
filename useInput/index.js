@@ -1,14 +1,29 @@
-import { StrictMode, useEffect, useState } from "react";
+import { StrictMode, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 import "./useInput";
 
+const useClick = (onClick) => {
+  const element = useRef();
+  useEffect(() => {
+    if (element.current) {
+      element.current.addEventListener("Click", onClick);
+    }
+    return () => {
+      if (element.current) {
+        element.current.removeEventListener("Click", onClick);
+      }
+    };
+  }, []);
+  return element;
+};
+
 const App = () => {
-  const titleUpdater = useTitle("Loading... ");
-  setTimeout(() => titleUpdater("Home", 5000));
+  const sayHello = () => console.log("say hello");
+  const title = useClick(sayHello);
   return (
     <div className="App">
-      <div>HI</div>
+      <h1 ref={title}>HI</h1>
     </div>
   );
 };
