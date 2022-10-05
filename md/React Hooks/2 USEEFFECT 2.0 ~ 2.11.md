@@ -133,7 +133,7 @@ input을 5초 뒤에 focus 하고싶다면
 ```js
 const App = () =>{
   const 바로이것 = useRef();
-  setTimeout(()=> 바로이것.current.focus(), 5000)
+  setTimeout(()=> 바로이것.current?.focus(), 5000)
   return(
     <div className="App">
       <div>Hi<div>
@@ -144,6 +144,8 @@ const App = () =>{
 ```
 
 이렇게 하면 된다.
+
+참고로 **current?.** 는 Optional chaining 임
 
 이게 바로 reference
 
@@ -205,3 +207,70 @@ const useClick = (onClick) => {
   return typeof onClick !== "function" ? undefined : element;
 };
 ```
+
+## 2.3 useConfirm & usePreventLeave
+
+useConfirm 은 사용자가 무언가를 하기전에 확인하는 기능
+
+```js
+const useConfirm = (message = "", callback, rejection) => {
+  if (typeof callback !== "function") {
+    return;
+  }
+  if (typeof rejection !== "function") {
+    return;
+  }
+  const confirmAction = () => {
+    if (window.confirm(message)) {
+      callback();
+    } else {
+      rejection();
+    }
+  };
+
+  return confirmAction;
+};
+
+function App() {
+  const deleteWorld = () => console.log("Delete the world");
+  const abort = () => console.log("Aborted");
+  const confirmDelete = useConfirm("Are you sure?", deleteWorld, abort);
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <button onClick={confirmDelete}>Delete the world</button>
+    </div>
+  );
+}
+```
+
+이번에는 usePreventLeave
+
+window 창을 닫을때 아직 저장 안했다고 경고창 띄우는거 그 기능임
+
+```js
+export const usePreventLeave = () => {
+  const listener = (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+  };
+  const enablePrevent = () => window.addEventListener("beforeunload", listener);
+  const disablePrevent = () =>
+    window.removeEventListener("beforeunload", listener);
+
+  return { enablePrevent, disablePrevent };
+};
+
+export default function App() {
+  const { enablePrevent, disablePrevent } = usePreventLeave();
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <button onClick={enablePrevent}>Protect</button>
+      <button onClick={disablePrevent}>Unprotect</button>
+    </div>
+  );
+}
+```
+
+## 2.4 useBeforeLeave
