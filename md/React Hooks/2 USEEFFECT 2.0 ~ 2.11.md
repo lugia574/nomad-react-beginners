@@ -274,3 +274,36 @@ export default function App() {
 ```
 
 ## 2.4 useBeforeLeave
+
+useBeforeLeave 는 마우스가 해당탭을 떠났을때 실행되는 function 임
+
+```js
+const useBeforeLeave = (onBefore) => {
+  if (typeof onBefore !== "function") {
+    return;
+  }
+  const hanble = (event) => {
+    const { clientY } = event;
+    if (clientY <= 0) {
+      onBefore();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mouseleave", hanble);
+    return document.removeEventListener("mouseleave", hanble);
+  }, []);
+};
+
+export default function App() {
+  const begForLife = () => console.log("please don't leave");
+  useBeforeLeave(begForLife);
+  return (
+    <div className="App">
+      <h1>Hello </h1>
+    </div>
+  );
+}
+```
+
+## 2.5 useFadeIn & useNetwork
