@@ -418,9 +418,6 @@ export default function App() {
 다음 useFullscreen 임
 
 ```js
-import { useEffect, useRef, useState } from "react";
-import "./styles.css";
-
 const useFullscreen = (callback) => {
   const element = useRef();
 
@@ -441,16 +438,19 @@ const useFullscreen = (callback) => {
     }
   };
   const exitFull = () => {
-    document.exitFullscreen();
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
+    const checkFullScreen = document.fullscreenElement;
+    if (checkFullScreen !== null) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
     }
+
     if (typeof callback === "function") {
       callback(false);
     }
@@ -476,3 +476,53 @@ export default function App() {
   );
 }
 ```
+
+[전체화면이 아닐 때 "Exit fullscreen"버튼을 누르면 생기는 오류 해결]
+
+document.fullscreenElement 로 전체화면인지 체크한 후 아닐 경우에만 document.exitFullscreen()을 실행하게 하기
+
+```js
+const exitFull = () => {
+  const checkFullScreen = document.fullscreenElement;
+  if (checkFullScreen !== null) {
+    document.exitFullscreen();
+  }
+};
+```
+
+## 2.7 useNotification
+
+다음은 알람 기능임
+
+```js
+const useNotification = (title, options) => {
+  if (!("Notification" in window)) {
+    return;
+  }
+
+  const fireNotif = () => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification(title, options);
+        } else {
+          return;
+        }
+      });
+    } else {
+      new Notification(title, options);
+    }
+  };
+  return fireNotif;
+};
+export default function App() {
+  const trigger = useNotification("hahaaha", { body: "hohohoho" });
+  return (
+    <div className="App">
+      <button onClick={trigger}>Hello</button>
+    </div>
+  );
+}
+```
+
+permission은 알람 받기를 거부했는지, 허가했는지, default 인지 알려주는거임
