@@ -307,3 +307,172 @@ export default function App() {
 ```
 
 ## 2.5 useFadeIn & useNetwork
+
+useFadeIn 은 css 로 충분히 구현 가능함
+
+그래도 hook을 이용한 방법을 알아두는게 좋겠지
+
+애니메이션을 hook 에 포함시는 것이니까 충분히 유용한 배움이 됨
+
+```js
+const useFadeIn = (duration = 1, delay = 1) => {
+  if (typeof duration !== "number" || typeof delay !== "number") {
+    return;
+  }
+
+  const element = useRef();
+  useEffect(() => {
+    if (element.current) {
+      const { current } = element;
+      current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`;
+      current.style.opacity = 1;
+    }
+  }, []);
+  return { ref: element, style: { opacity: 0 } };
+};
+
+export default function App() {
+  const fadeH1 = useFadeIn(1, 0);
+  const fadeH2 = useFadeIn(2, 2);
+  return (
+    <div className="App">
+      <h1 {...fadeH1}>Hello </h1>
+      <h1 {...fadeH2}>hahaha </h1>
+    </div>
+  );
+}
+```
+
+useNetwork는 navigator가 online또는 offline일 때 작동
+
+가령 인터넷이 중간에 끊겼을 때 '인터넷이 끊겼습니다.' 라는 팝업 띄어주고 그런거
+
+```js
+const useNetwork = (onChange) => {
+  const [status, setStauts] = useState(navigator.onLine);
+  const handleChange = () => {
+    if (typeof onChange === "function") {
+      onChange(navigator.onLine);
+    }
+    setStauts(navigator.onLine);
+  };
+  useEffect(() => {
+    window.addEventListener("online", handleChange);
+    window.addEventListener("offline", handleChange);
+    () => {
+      window.removeEventListener("online", handleChange);
+      window.removeEventListener("offline", handleChange);
+    };
+  }, []);
+
+  return status;
+};
+
+export default function App() {
+  const handleNetworkChange = (online) => {
+    console.log(online ? "juse went online" : "we are offline");
+  };
+  const online = useNetwork(handleNetworkChange);
+  return (
+    <div className="App">
+      <h1>{online ? "Online" : "Offline"}</h1>
+    </div>
+  );
+}
+```
+
+`navigator.onLine` 는 현재 네트워크가 온라인인지 오프라인인지 알려주는거임
+
+## 2.6 useScroll & useFullscreen
+
+```js
+const useScroll = () => {
+  const [state, Setstate] = useState({
+    y: 0,
+    x: 0,
+  });
+  const onscroll = () => {
+    Setstate({ y: window.scrollY, x: window.screenX });
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", onscroll);
+    return () => window.removeEventListener("scroll", onscroll);
+  }, []);
+
+  return state;
+};
+
+export default function App() {
+  const { y } = useScroll();
+
+  return (
+    <div className="App" style={{ height: "1000vh" }}>
+      <h1 style={{ position: "fixed", color: y > 100 ? "red" : "blue  " }}>
+        Hello
+      </h1>
+    </div>
+  );
+}
+```
+
+다음 useFullscreen 임
+
+```js
+import { useEffect, useRef, useState } from "react";
+import "./styles.css";
+
+const useFullscreen = (callback) => {
+  const element = useRef();
+
+  const triggerFull = () => {
+    if (element.current) {
+      if (element.current.requestFullscreen) {
+        element.current.requestFullscreen();
+      } else if (element.current.mozRequestFullscreen) {
+        element.current.mozRequestFullScreen();
+      } else if (element.current.webkitRequestFullscreen) {
+        element.current.webkitRequestFullScreen();
+      } else if (element.current.msRequestFullscreen) {
+        element.current.msRequestFullScreen();
+      }
+      if (typeof callback === "function") {
+        callback(true);
+      }
+    }
+  };
+  const exitFull = () => {
+    document.exitFullscreen();
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+    if (typeof callback === "function") {
+      callback(false);
+    }
+  };
+  return { element, triggerFull, exitFull };
+};
+
+export default function App() {
+  const callbackFull = (isFull) => {
+    console.log(isFull ? "full~~~" : "small~~~~");
+  };
+  const { element, triggerFull, exitFull } = useFullscreen(callbackFull);
+  return (
+    <div className="App">
+      <h1>Hello</h1>
+      <div ref={element}>
+        <img src="https://i.pinimg.com/564x/52/12/b8/5212b84be9f4ead9103c409d5c866c67.jpg" />
+
+        <button onClick={exitFull}>exitFull </button>
+      </div>
+      <button onClick={triggerFull}>make fullscreen </button>
+    </div>
+  );
+}
+```
