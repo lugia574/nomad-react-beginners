@@ -526,3 +526,88 @@ export default function App() {
 ```
 
 permission은 알람 받기를 거부했는지, 허가했는지, default 인지 알려주는거임
+
+## 2.8 useAxios
+
+이제 USeAxios
+
+axios 는 http request 를 만드는거임
+
+axios를 add dependency 해줄꺼임
+
+`App`
+
+```js
+import { useEffect, useRef, useState } from "react";
+import "./styles.css";
+import useAxios from "./useAxios";
+
+export default function App() {
+  const { loading, data, error, refetch } = useAxios({
+    url: "https://yts.mx/api/v2/list_movies.json",
+  });
+
+  return (
+    <div className="App">
+      <h1>{data && data.status}</h1>
+      <h2>{loading && "loading"}</h2>
+      <h3>{JSON.stringify(data).length}</h3>
+      <button onClick={refetch}>Refetch</button>
+    </div>
+  );
+}
+```
+
+```js
+import defaultAxios from "axios";
+import { useEffect, useState } from "react";
+
+const useAxios = (opts, axiosInstance = defaultAxios) => {
+  const [state, setState] = useState({
+    loading: true,
+    error: false,
+    data: null,
+  });
+  const [trigger, setTrigger] = useState(0);
+  if (!opts.url) {
+    return;
+  }
+  const refetch = () => {
+    setState({
+      ...state,
+      loading: true,
+    });
+    setTrigger(Date.now());
+  };
+  useEffect(() => {
+    axiosInstance(opts)
+      .then((data) => {
+        setState({
+          ...state,
+          loading: false,
+          data,
+        });
+      })
+      .catch((error) => {
+        setState({
+          ...state,
+          loading: false,
+          error,
+        });
+      });
+  }, [trigger]);
+  return { ...state, refetch };
+};
+
+export default useAxios;
+```
+
+## 2.9 Conclusions
+
+다 함 ㅋ
+
+대부분 비슷비슷 했음
+
+## 2.10 Publishing to NPM
+
+귀찮 생략
