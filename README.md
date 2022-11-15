@@ -10,9 +10,9 @@
 
 이들은 상호보완적이라 둘 다 보면서 공부하길 권장함
 
-# 코딩애플
+# 생활코딩 리액트 기초
 
-https://www.youtube.com/watch?v=LclObYwGj90&list=PLfLgtT94nNq1e6tr4sm2eH6ZZC2jcqGOy
+https://opentutorials.org/course/4900
 
 [1강] 수업소개: https://bit.ly/3dhgpzI
 
@@ -21,6 +21,10 @@ https://www.youtube.com/watch?v=LclObYwGj90&list=PLfLgtT94nNq1e6tr4sm2eH6ZZC2jcq
 [3강] 소스코드 수정방법: https://bit.ly/3QPTA3X
 
 [4강] 컴포넌트 만들기: https://bit.ly/3xrB8aQ
+
+# 코딩애플
+
+https://www.youtube.com/watch?v=LclObYwGj90&list=PLfLgtT94nNq1e6tr4sm2eH6ZZC2jcqGOy
 
 # REACT HOOKS
 
