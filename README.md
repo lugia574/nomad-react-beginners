@@ -22,6 +22,16 @@ https://opentutorials.org/course/4900
 
 [4강] 컴포넌트 만들기: https://bit.ly/3xrB8aQ
 
+---
+
+솔직히 생활코딩은 너무 수준이 애기애기함
+
+깊이 있는 얘기를 안함
+
+그래서 [벨로퍼트와 함께하는 모던 리액트 ](https://react.vlpt.us/basic/01-concept.html)
+
+여기껄 참고해서 첨삭을 하겠음
+
 # 코딩애플
 
 https://www.youtube.com/watch?v=LclObYwGj90&list=PLfLgtT94nNq1e6tr4sm2eH6ZZC2jcqGOy
